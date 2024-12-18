@@ -4,6 +4,7 @@ import Animated, { FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../FirebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import styles from '../Css/Signupcss';
 
 export default function SignUpScreen() {
     const { width, height } = Dimensions.get('window');
@@ -14,108 +15,6 @@ export default function SignUpScreen() {
     const [loading, setloading] = useState(false);
     const auth = FIREBASE_AUTH;
     const navigation = useNavigation();
-    const styles = StyleSheet.create({
-        background: {
-            flex: 1,
-            backgroundColor: 'white'
-        },
-        image: {
-            width: width,
-            height: height * 0.9,
-            position: 'absolute',
-        },
-        light: {
-            flexDirection: 'row',
-            position: 'absolute',
-            width: width,
-            height: height * 0.7,
-            justifyContent: 'space-around',
-        },
-        lightimage1: {
-            height: height * 0.25,
-            width: width * 0.22,
-        },
-        lightimage2: {
-            height: height * 0.20,
-            width: width * 0.17,
-        },
-        titleandform: {
-            marginTop: height * 0.28,
-            alignItems: 'center',
-            flex: 1,
-            justifyContent: 'flex-end',
-        },
-        loginTitile: {
-            // marginBottom: '20%'
-        },
-        logintext: {
-            color: 'white',
-            fontSize: 50,
-            fontWeight: 'bold',
-        },
-        formstyle: {
-            marginTop: height * 0.1,
-            flex: 1,
-            alignItems: 'center',
-        },
-
-        formInput: {
-            width: width * 0.65,
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            borderRadius: 10,
-            paddingVertical: height * 0.01,
-            paddingHorizontal: width * 0.008,
-            marginVertical: height * 0.007,
-            fontSize: 20,
-            borderWidth: 1,
-            borderColor: '#ccc',
-        },
-        buttonsection: {
-            width: width,
-            alignItems: 'center'
-        },
-        button: {
-            backgroundColor: 'rgb(82,152,199)',
-            padding: 12,
-            marginVertical: height * 0.01,
-            alignItems: 'center',
-            borderRadius: 10,
-            width: width * 0.65
-        },
-        buttontext: {
-            fontSize: 20,
-            color: 'white'
-        },
-        signuptextsection: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: height * 0.003
-        },
-        signup: {
-            color: 'rgb(82,152,199)',
-        },
-        line: {
-            width: width * 0.13, // Adjust the width of the line dynamically
-            height: 1,
-            backgroundColor: 'gray',
-            marginHorizontal: width * 0.03,
-        },
-        othersigntext: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: height * 0.01,
-        },
-        socialButtons: {
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginTop: height * 0.01,
-        },
-        socialButtonText: {
-            fontSize: 16,
-            color: 'rgb(82,152,199)',
-        },
-    });
     const Signin = async () => {
         setloading(true);
         try {
