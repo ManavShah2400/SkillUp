@@ -5,8 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Profiletyles from '../Css/Profilecss';
 import Profilestyles from '../Css/Profilecss';
 import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { RootStackParamList } from '../App';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export default function ProfileScreen() {
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Profile'>;
+
+type Props = {
+    navigation: ProfileScreenNavigationProp;
+};
+
+const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   const { width, height } = Dimensions.get('window')
   const signout = () => {
     Alert.alert(
@@ -20,7 +28,7 @@ export default function ProfileScreen() {
         {
           text: 'Sign Out',
           onPress: () => {
-            FIREBASE_AUTH.signOut()
+            navigation.navigate('Login')
           },
         },
       ]
@@ -73,3 +81,5 @@ export default function ProfileScreen() {
     </SafeAreaView>
   )
 }
+
+export default ProfileScreen;

@@ -15,42 +15,60 @@ import HomeScreen from './Screens/Home';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+export type RootStackParamList = {
+  Login: undefined;
+  Inside: {
+    screen: string;
+    params: {
+      user: any;
+    };
+  };
+  SignUp: undefined;
+  WishList: { user: any };
+  Features: { user: any };
+  MyLearning: { user: any };
+  Search: { user: any };
+  Profile: { user: any };
+};
 
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
+function InsideLayout({ route }) {
+  const { user } = route.params || {};
 
-function InsideLayout() {
   return (
     <Tab.Navigator id={undefined}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'My Learning') {
+          if (route.name == 'Features') {
+            iconName = focused ? 'star' : 'star-outline';
+          } else if (route.name === 'WishList') {
+            iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'MyLearning') {
             iconName = focused ? 'book' : 'book-outline';
           } else if (route.name === 'Search') {
             iconName = focused ? 'search' : 'search-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'rgb(82,152,199)',
         tabBarInactiveTintColor: 'gray',
-        headerShown: false, // Hide header for all tabs
+        headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="My Learning" component={CoursesScreen} />
+      <Tab.Screen name='Features' component={HomeScreen} />
+      <Tab.Screen name="WishList" component={HomeScreen} initialParams={{ user }} />
+      <Tab.Screen name="MyLearning" component={CoursesScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
+
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
@@ -62,14 +80,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login" id={undefined}>
-        {user ? (
-          <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
-          </>
-        )}
+        <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
